@@ -1,0 +1,1 @@
+To develop a predictive maintenance of industrial machinery, we have developed and trained an ML model that checks various physical conditions and status of the machinery and will predict  which type of failure the machine may particularly face.
