@@ -5,7 +5,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 import joblib
 
-data = pd.read_csv("hackproj\predictive_maintenance.csv")
+data = pd.read_csv("predictive_maintenance.csv")
 
 # Drop unnecessary columns
 df = data.drop(["UDI", "Product ID", "Target"], axis=1)
@@ -53,3 +53,4 @@ test_accuracy = fmodel.score(X_test, y_test)
 print(f'Test Accuracy: {test_accuracy:.2f}')
 
 joblib.dump(fmodel, "wmodel.pkl")
+joblib.dump(oh , "product_type_encoder.pkl")
