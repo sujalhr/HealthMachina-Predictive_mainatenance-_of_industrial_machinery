@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Machine Failure Prediction</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="static\styles.css">
 </head>
 <body>
     <div class="container">
         <h1>Machine Failure Prediction</h1>
-        <form id="predictionForm" method="post" action="/predict">
+        <form id="predictionForm">
             <label for="uid">User ID (UID):</label>
             <input type="text" id="uid" name="uid" required>
 
@@ -47,21 +47,30 @@
 
     <script>
         document.getElementById('predictionForm').addEventListener('submit', function(event) {
-            event.preventDefault();
+            event.preventDefault();  // Prevent form from submitting the traditional way
+
+            // Collect form data
             const formData = new FormData(this);
+
+            // Make a POST request to the server
             fetch('/predict', {
                 method: 'POST',
                 body: formData,
             })
             .then(response => response.json())
             .then(data => {
+                // Check for errors in the response
                 if (data.error) {
-                    alert(data.error);
+                    document.getElementById('result').innerText = `Error: ${data.error}`;
                 } else {
+                    // Display the prediction result
                     document.getElementById('result').innerText = `Prediction: ${data.prediction}, Failure Mode: ${data.failure_mode}`;
                 }
             })
-            .catch(error => console.error('Error:', error));
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('result').innerText = 'An error occurred while processing the request.';
+            });
         });
     </script>
 </body>
